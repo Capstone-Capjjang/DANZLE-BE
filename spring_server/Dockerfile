@@ -1,4 +1,4 @@
-FROM gradle:8.5.0-jdk21-slim AS builder  
+FROM gradle:8.5.0-jdk21 AS builder  
 WORKDIR /app
 
 COPY gradle gradle
