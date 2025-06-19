@@ -19,7 +19,12 @@ def get_ref_pose_from_disk(song_title: str, frame_index: int):
         file_path = f"./ref_poses/{song_title}_ref_pose_filtered_1sec_normalized.json"
         try:
             with open(file_path, "r") as f:
-                pose_cache[song_title] = json.load(f)
+                pose_dict_raw = json.load(f)  
+                pose_dict = {
+                    int(entry["frame"]): entry["keypoints"]
+                    for entry in pose_dict_raw
+                }
+                pose_cache[song_title] = pose_dict
         except FileNotFoundError:
             app.logger.error(f"Reference pose file not found for {song_title}")
             return None
@@ -27,9 +32,8 @@ def get_ref_pose_from_disk(song_title: str, frame_index: int):
             app.logger.error(f"Error decoding JSON from {file_path}")
             return None
 
-    ref_data = pose_cache[song_title]
-    ref_pose_by_frame = {entry['frame']: entry['keypoints'] for entry in ref_data}
-    return ref_pose_by_frame.get(frame_index)
+    return pose_cache[song_title].get(frame_index)
+
 
 # ────────────────────────
 # 실시간 포즈 평가 API
