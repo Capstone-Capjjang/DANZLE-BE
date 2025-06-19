@@ -1,8 +1,11 @@
 .gradle
-build
-out
-.idea
+build/
+out/
+
+.idea/
 *.iml
-.git
+
+.git/
 *.log
+
 .DS_Store
