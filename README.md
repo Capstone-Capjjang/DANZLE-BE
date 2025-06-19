@@ -83,14 +83,14 @@ git clone https://github.com/Capstone-Capjjang/DANZLE-BE.git
 cd DANZLE-BE
 ```
 
-1. Create environment variable files:
+2. Create environment variable files:
 
 ```bash
 vim .env_spring
 vim .env_flask
 ```
 
-1. Build and run the backend:
+3. Build and run the backend:
 
 ```bash
 docker-compose up --build -d
