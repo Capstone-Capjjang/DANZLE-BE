@@ -1123,3 +1123,86 @@ GET
 - The content type is fixed to `video/mp4`
 - The file will be stored in the following S3 path format: `videos/{filename}`
 
+---
+
+# 10. AiFeedbackController API Documentation
+
+This controller provides GPT-based AI feedback features using image-based or session-based evaluation results.
+
+---
+
+### 1. GET `/api/image-feedback`
+
+**Purpose**
+
+Provides GPT feedback using two image files (user and expert) as input. Mainly used for testing purposes.
+
+**Method**
+
+GET
+
+**Request Parameters**
+
+- `userImagePath` (String): Path to the user image file (will be base64-encoded)
+
+- `expertImagePath` (String): Path to the expert image file (will be base64-encoded)
+
+**Behavior**
+
+- Converts both images to base64
+
+- Sends the images to OpenAI GPT API with a fixed prompt
+
+- Returns GPT-generated feedback about pose differences
+
+**Responses**
+
+- `200 OK`
+
+Returns a `String` with GPT-generated feedback.
+
+- `400 Bad Request`
+
+If file paths are invalid or feedback fails.
+
+---
+
+### 2. GET `/api/low-score-feedback`
+
+**Purpose**
+
+Generates GPT feedback based on low-score sections of an accuracy session.
+
+**Method**
+
+GET
+
+**Request Parameters**
+
+- `sessionId` (Long): ID of the accuracy session
+
+**Behavior**
+
+- Loads stored analysis results linked to the session
+- Extracts the lowest-scoring frames
+- Calls OpenAI GPT with preformatted prompts using pose JSON
+- Returns GPT feedback covering multiple low-score segments
+
+**Responses**
+
+- `200 OK`
+- `400 Bad Request`
+    
+    If session is invalid or analysis data is missing
+    
+- `500 Internal Server Error`
+    
+    If GPT communication fails
+    
+
+## Summary Table
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | /api/image-feedback | Generate GPT feedback from user vs expert image |
+| GET | /api/low-score-feedback | Generate GPT feedback based on session analysis |
