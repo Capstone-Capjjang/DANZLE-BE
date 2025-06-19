@@ -88,7 +88,7 @@ def compare_pose_directional(user, ref):
             return 0.0
 
     # 허용 오차 및 감점 완화
-    clip_threshold = 4.0
+    clip_threshold = 4.5
     tolerance_scale = 2.0
 
     def process_diff(diff):
