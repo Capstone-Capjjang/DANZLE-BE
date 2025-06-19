@@ -359,6 +359,7 @@ public class AccuracySessionService {
                             session.getSong().getArtist(), session.getSong().getCoverImagePath(), session.getSong().getCreatedBy());
 
             session.setResultLevel(resultLevel);
+            accuracySessionRepository.save(session);
 
             // resultLevel만 포함되도록 응답 생성
             return new AccuracySessionSummaryResponse(
