@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  spring-app:
+    container_name: spring-app
+    build:
+      context: ./spring_server
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env_spring
+    depends_on:
+      - flask-app
+      - redis
+    networks:
+      - app-network
+    volumes:
+      - /srv/shared:/app/output
+
+
+  flask-app:
+    container_name: flask-app
+    build:
+      context: ./flask_server
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env_flask
+    networks:
+      - app-network
+    volumes:
+      - /srv/shared:/app/output
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  redis:
+    image: redis:alpine
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: capston_app-network
+    driver: bridge
