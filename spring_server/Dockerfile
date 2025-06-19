@@ -1,7 +1,6 @@
 FROM gradle:8.5.0-jdk21 AS builder  
 WORKDIR /app
 
-COPY gradle gradle
 COPY build.gradle settings.gradle ./
 RUN gradle dependencies --no-daemon        
 
