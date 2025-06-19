@@ -1,0 +1,34 @@
+*.log
+.DS_Store
+.env
+.env_*
+
+# Git 내부
+.git/
+
+# IDE 설정
+.idea/
+*.iml
+
+
+# Python (flask_server)
+
+__pycache__/
+*.pyc
+flask_server/__pycache__/
+flask_server/*.pyc
+
+
+# Java/Spring (spring_server)
+
+spring_server/.gradle/
+spring_server/build/
+spring_server/out/
+spring_server/*.iml
+spring_server/.idea/
+
+
+# Docker
+
+**/Dockerfile~
+**/.dockerignore~
